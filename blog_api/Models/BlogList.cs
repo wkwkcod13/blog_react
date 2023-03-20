@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 
 namespace blog_api.Models
 {
@@ -85,6 +86,17 @@ namespace blog_api.Models
             return -1;
         }
 
+        public int IndexById(string Id)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                if ((_items[i] as Blog)?.BlogId == Id)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
         public void Insert(int index, object value)
         {
             if (index > count || index < 0)
