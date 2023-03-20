@@ -2,22 +2,22 @@
 
 namespace blog_api.Models
 {
-    public class ComentList : IList<IComent>
+    public class CommentList : IList<IComment>
     {
-        private IComent?[] _items;
-        private static readonly IComent[] _empty = new IComent[4];
-        public ComentList()
+        private IComment?[] _items;
+        private static readonly IComment[] _empty = new IComment[4];
+        public CommentList()
         {
             _items = _empty;
             count = 0;
         }
-        public ComentList(IEnumerable<IComent> items)
+        public CommentList(IEnumerable<IComment> items)
         {
-            _items = new IComent[items.Count()];
+            _items = new IComment[items.Count()];
             count = items.Count();
             items.ToArray().CopyTo(_items, 0);
         }
-        public IComent? this[int index]
+        public IComment? this[int index]
         {
             get
             {
@@ -41,7 +41,7 @@ namespace blog_api.Models
 
         public bool IsReadOnly => throw new NotImplementedException();
 
-        public void Add(IComent item)
+        public void Add(IComment item)
         {
             throw new NotImplementedException();
         }
@@ -51,32 +51,32 @@ namespace blog_api.Models
             throw new NotImplementedException();
         }
 
-        public bool Contains(IComent item)
+        public bool Contains(IComment item)
         {
             throw new NotImplementedException();
         }
 
-        public void CopyTo(IComent[] array, int arrayIndex)
+        public void CopyTo(IComment[] array, int arrayIndex)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerator<IComent> GetEnumerator()
+        public IEnumerator<IComment> GetEnumerator()
         {
             throw new NotImplementedException();
         }
 
-        public int IndexOf(IComent item)
+        public int IndexOf(IComment item)
         {
             throw new NotImplementedException();
         }
 
-        public void Insert(int index, IComent item)
+        public void Insert(int index, IComment item)
         {
             throw new NotImplementedException();
         }
 
-        public bool Remove(IComent item)
+        public bool Remove(IComment item)
         {
             throw new NotImplementedException();
         }
