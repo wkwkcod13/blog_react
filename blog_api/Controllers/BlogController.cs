@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using blog_api.Models;
+using blog_api.Service.Interface;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using System.Net.Mime;
 
 namespace blog_api.Controllers
 {
@@ -6,6 +10,11 @@ namespace blog_api.Controllers
     [Route("[controller]")]
     public class BlogController : ControllerBase
     {
+        private readonly IBlogService blogService;
+        public BlogController(IBlogService service)
+        {
+            blogService = service;
+        }
         [HttpHead]
         public IActionResult GetHead()
         {
@@ -15,24 +24,51 @@ namespace blog_api.Controllers
         [HttpGet]
         public IActionResult GetList()
         {
-            return new JsonResult(null);
+            BlogList<IBlog>? list = default;
+            try
+            {
+                list = blogService.GetBlogList();
+            }
+            catch (Exception ex)
+            {
+            }
+            return new JsonResult(list);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetDetail(string id)
+        [HttpGet("{index}")]
+        public IActionResult GetDetail(int index)
         {
+            try
+            {
+                return new JsonResult(blogService.GetBlogByIndex(index));
+            }
+            catch (Exception ex) { }
             return new JsonResult(null);
         }
 
         [HttpPost()]
-        public IActionResult CreateDetail(object param)
+        //[Consumes(MediaTypeNames.Application.Json)]
+        public IActionResult CreateDetail(Blog param)
         {
-            return new JsonResult(null);
+            try
+            {
+                if (blogService.CreateBlog(param) > -1)
+                {
+                    return new JsonResult(true);
+                }
+            }
+            catch (Exception ex) { }
+            return new JsonResult(false);
         }
 
         [HttpPut()]
         public IActionResult UpdateDetail(object param)
         {
+            try
+            {
+
+            }
+            catch { }
             return new JsonResult(null);
         }
 
@@ -45,6 +81,13 @@ namespace blog_api.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+            }
             return new JsonResult(null);
         }
     }
