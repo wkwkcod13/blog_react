@@ -7,11 +7,22 @@ function MyComponent() {
     }, []);
 
     const fetchData = async () => {
-        const response = await fetch('https://localhost:44372/Blog', { method: 'GET', mode: 'no-cors' }).catch(res => {
+        const response = await fetch("https://localhost:44372/Blog",
+            {
+                method: "GET"
+            })
+            .then(async res => {
             console.log(res);
-        });
-        const jsonData = await response.json();
+                console.log(res.status + "_" + res.statusText);
+
+                let jsonData = await res.json();
+
+                console.log(jsonData);
         setData(jsonData);
+            })
+            .catch(res => {
+                console.log(res);
+            });
     }
     return (
         <div>
