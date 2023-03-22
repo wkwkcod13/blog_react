@@ -24,18 +24,26 @@ function MyComponent() {
                 console.log(res);
             });
     }
+
+    const itemElement = data.map((item, index) => (
+        <div key={index}>{item.blogId}</div>
+    ));
+
     return (
         <div>
             <h1>Todo List</h1>
-            <span>{data}</span>
+            {itemElement}
             <table>
-                {data.map(item => (
-                    <tr>
-                        <td>{item.BlogId}</td>
-                        <td>{item.Title}</td>
-                        <td>{item.Description}</td>
+                <tbody>
+                    {
+                        data.map((item, index) => (
+                            <tr key={index}>
+                                <td>{item.blogId}</td>
+                                <td>{item.title}</td>
                     </tr>
-                ))}
+                        ))
+                    }
+                </tbody>
             </table>
         </div>
     );
