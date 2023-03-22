@@ -22,6 +22,8 @@ namespace blog_api.Controllers
         }
 
         [HttpGet]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public IActionResult GetList()
         {
             BlogList<IBlog>? list = default;
