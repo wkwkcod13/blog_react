@@ -83,7 +83,7 @@ namespace blog_api.Controllers
         {
             try
             {
-                IBlog blog = blogService.Delete(id);
+                IBlog? blog = blogService.Delete(id);
                 return new JsonResult(blog);
             }
             catch (Exception ex)
