@@ -12,13 +12,13 @@ function MyComponent() {
                 method: "GET"
             })
             .then(async res => {
-            console.log(res);
+                console.log(res);
                 console.log(res.status + "_" + res.statusText);
 
                 let jsonData = await res.json();
 
                 console.log(jsonData);
-        setData(jsonData);
+                setData(jsonData);
             })
             .catch(res => {
                 console.log(res);
@@ -40,7 +40,7 @@ function MyComponent() {
                             <tr key={index}>
                                 <td>{item.blogId}</td>
                                 <td>{item.title}</td>
-                    </tr>
+                            </tr>
                         ))
                     }
                 </tbody>
