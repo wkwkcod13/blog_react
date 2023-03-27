@@ -18,6 +18,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IBlogService, BlogService>();
+builder.Services.AddSingleton<ICalendarService, CalendarService>();
 
 var app = builder.Build();
 
