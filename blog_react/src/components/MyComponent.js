@@ -7,10 +7,7 @@ function MyComponent() {
     }, []);
 
     const fetchData = async () => {
-        const response = await fetch("https://localhost:44372/Blog",
-            {
-                method: "GET"
-            })
+        await fetch("https://localhost:44372/Blog", { method: "GET" })
             .then(async res => {
                 console.log(res);
                 console.log(res.status + "_" + res.statusText);
