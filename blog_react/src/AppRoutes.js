@@ -4,6 +4,7 @@ import { PostEdit } from './components/PostEdit';
 import { Pages } from './components/Pages';
 import { Themes } from './components/Themes';
 import { Layout } from './components/Layout';
+import { Dates } from './components/Dates';
 
 
 const AppRoutes = [
@@ -30,6 +31,10 @@ const AppRoutes = [
     {
         path: '/layout',
         element: <Layout></Layout>
+    },
+    {
+        path: '/dates',
+        element:<Dates></Dates>
     }
 ];
 export default AppRoutes;
