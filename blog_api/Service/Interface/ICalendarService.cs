@@ -1,7 +1,9 @@
-﻿namespace blog_api.Service.Interface
+﻿using blog_api.Models;
+
+namespace blog_api.Service.Interface
 {
     public interface ICalendarService
     {
-        object? GetList();
+        List<ICalendarEvent> GetList();
     }
 }

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace blog_api.Models
 {
-    public class BlogList<T> : IList where T : class, IBlog
+    public class BlogList<T> : IEnumerable<T>, IList where T : class, IBlog
     {
         private T?[] _items;
         private static readonly T[] _empty = new T[4];
@@ -137,6 +137,21 @@ namespace blog_api.Models
             for (int i = 0; i < count; i++)
             {
                 yield return _items[i];
+            }
+        }
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            for (int i = 0; i < count; i++)
+            {
+                if (_items[i] == null)
+                {
+                    yield return default;
+                }
+                else
+                {
+                    yield return _items[i];
+                }
             }
         }
     }

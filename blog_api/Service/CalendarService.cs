@@ -1,20 +1,25 @@
-﻿using blog_api.Service.Interface;
+﻿using blog_api.Models;
+using blog_api.Service.Interface;
 using iText.Html2pdf.Attach.Impl.Tags;
+using System.Linq;
 
 namespace blog_api.Service
 {
     public class CalendarService : ICalendarService
     {
         private readonly IServiceProvider _provicer;
-        public CalendarService(IServiceProvider provider)
+        private readonly ICalendarFactory _calendarFactory;
+        public CalendarService(IServiceProvider provider, ICalendarFactory factory)
         {
             _provicer = provider;
+            _calendarFactory = factory;
         }
 
-        public object? GetList()
+        public List<ICalendarEvent> GetList()
         {
             IBlogService? blogService = _provicer.GetService<IBlogService>();
-            var list = blogService?.GetBlogList();
+            BlogList<IBlog>? blogs = blogService?.GetBlogList();
+            var list = blogs?.Select(item => _calendarFactory.ConvertFromBlog(item)).ToList() ?? new List<ICalendarEvent>();
             return list;
         }
     }
