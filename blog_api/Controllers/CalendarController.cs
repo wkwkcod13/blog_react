@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using blog_api.Service.Interface;
 using blog_api.Service;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using System.Net.Mime;
+using blog_api.Models;
 
 namespace blog_api.Controllers
 {
@@ -19,7 +22,7 @@ namespace blog_api.Controllers
         {
             try
             {
-                var list = _calendarService.GetList();
+                List<ICalendarEvent> list = _calendarService.GetList();
                 return new JsonResult(list);
             }
             catch (Exception ex)
