@@ -14,7 +14,7 @@ namespace blog_api.Controllers
         }
 
         [HttpGet]
-        [Produces("application/json")]
+        [Produces(MediaTypeNames.Application.Json)]
         public IActionResult GetList()
         {
             try
@@ -30,7 +30,7 @@ namespace blog_api.Controllers
         }
 
         [HttpGet("{id}")]
-        [Produces("application/json")]
+        [Produces(MediaTypeNames.Application.Json)]
         public IActionResult GetDetail(string id)
         {
             return new JsonResult(new { id });

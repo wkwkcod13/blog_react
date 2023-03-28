@@ -22,8 +22,8 @@ namespace blog_api.Controllers
         }
 
         [HttpGet]
-        [Consumes("application/json")]
-        [Produces("application/json")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
         public IActionResult GetList()
         {
             BlogList<IBlog>? list = default;
@@ -49,7 +49,6 @@ namespace blog_api.Controllers
         }
 
         [HttpPost()]
-        //[Consumes(MediaTypeNames.Application.Json)]
         public IActionResult CreateDetail(Blog param)
         {
             try
