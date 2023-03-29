@@ -48,7 +48,8 @@ namespace blog_api.Models
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            _items = _empty;
+            count = 0;
         }
 
         public bool Contains(IComment item)

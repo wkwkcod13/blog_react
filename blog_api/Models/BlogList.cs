@@ -40,11 +40,11 @@ namespace blog_api.Models
         private int count;
         public int Count => count;
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        public bool IsReadOnly => false;
 
-        public bool IsFixedSize => throw new NotImplementedException();
+        public bool IsFixedSize => false;
 
-        public bool IsSynchronized => throw new NotImplementedException();
+        public bool IsSynchronized => true;
 
         public object SyncRoot => throw new NotImplementedException();
 
@@ -60,7 +60,7 @@ namespace blog_api.Models
 
         public void Clear()
         {
-            _items = new T[4];
+            _items = _empty;
             count = 0;
         }
 
