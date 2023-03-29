@@ -144,14 +144,7 @@ namespace blog_api.Models
         {
             for (int i = 0; i < count; i++)
             {
-                if (_items[i] == null)
-                {
-                    yield return default;
-                }
-                else
-                {
-                    yield return _items[i];
-                }
+                yield return _items[i];
             }
         }
     }
