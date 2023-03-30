@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using blog_api.Models.Test;
 using System.Net.Mime;
+using Microsoft.AspNetCore.Authorization;
+
 namespace blog_api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
 
@@ -39,7 +42,6 @@ namespace blog_api.Controllers
                 {
                     if (message is TextMessage text)
                     {
-
                     }
                     if (message is PhotoMessage photo)
                     {
@@ -48,7 +50,6 @@ namespace blog_api.Controllers
             }
             catch (Exception ex)
             {
-
             }
             return new JsonResult(messages);
         }
@@ -63,11 +64,9 @@ namespace blog_api.Controllers
                 {
                     if (message is TextMessage text)
                     {
-
                     }
                     if (message is PhotoMessage photo)
                     {
-
                     }
                 }
                 return new JsonResult(messages);
