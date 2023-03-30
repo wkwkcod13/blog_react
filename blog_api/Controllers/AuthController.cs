@@ -20,7 +20,7 @@ namespace blog_api.Controllers
             {
                 if (AuthenticateUser(userName, password))
                 {
-                    var token = _jwtHelper.GenerateEncryptionToken(userName, new Guid().ToString(), null);
+                    var token = _jwtHelper.GenerateEncryptionToken(userName, new Guid().ToString(), new List<string>() { "user", "admin" }, null);
                     return Ok(new { token });
                 }
                 else
@@ -41,7 +41,7 @@ namespace blog_api.Controllers
             {
                 if (AuthenticateUser(userName, password))
                 {
-                    var token = _jwtHelper.GenerateToken(userName, new Guid().ToString(), null);
+                    var token = _jwtHelper.GenerateToken(userName, new Guid().ToString(), new List<string>() { "user", "admin" }, null);
                     return Ok(new { token });
                 }
                 else

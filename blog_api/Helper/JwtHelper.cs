@@ -16,7 +16,7 @@ namespace blog_api.Helper
             this.config = config;
         }
 
-        public string GenerateToken(string userName, string device, Dictionary<string, object>? claimKeys, int expireMinutes = 60)
+        public string GenerateToken(string userName, string device, List<string>? roles, Dictionary<string, object>? claimKeys, int expireMinutes = 60)
         {
             var issuer = config.GetValue<string>("JwtSettings:Issuer");
 
@@ -39,8 +39,14 @@ namespace blog_api.Helper
                 }
             }
 
-            claims.Add(new Claim("roles", "Users")); //// 你可以自行擴充 "roles" 加入登入者該有的角色
-                                                     // 新增自訂的User資訊 ***
+            if (roles is List<string> list)
+            {
+                foreach (var role in list)
+                {
+                    claims.Add(new Claim("roles", role));//// 你可以自行擴充 "roles" 加入登入者該有的角色
+                                                         // 新增自訂的User資訊 ***
+                }
+            }
             return GenerateToken(claims, expireMinutes);
         }
 
@@ -80,7 +86,7 @@ namespace blog_api.Helper
         /// <param name="claimKeys"></param>
         /// <param name="expireMinutes"></param>
         /// <returns></returns>
-        public string GenerateEncryptionToken(string userName, string device, Dictionary<string, object>? claimKeys, int expireMinutes = 60)
+        public string GenerateEncryptionToken(string userName, string device, List<string>? roles, Dictionary<string, object>? claimKeys, int expireMinutes = 60)
         {
             var issuer = config.GetValue<string>("JwtSettings:Issuer");
 
@@ -104,7 +110,13 @@ namespace blog_api.Helper
                 }
             }
 
-            claims.Add(new Claim("roles", "Users")); //// 你可以自行擴充 "roles" 加入登入者該有的角色
+            if (roles is List<string> list)
+            {
+                foreach (var role in list)
+                {
+                    claims.Add(new Claim("roles", role)); //// 你可以自行擴充 "roles" 加入登入者該有的角色
+                }
+            }
             return GenerateEnvryptionToken(userName, issuer, claims, expireMinutes);
         }
 

@@ -43,6 +43,17 @@ builder.Services.AddAuthentication(option =>
         TokenDecryptionKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(encryKey))
     };
 });
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAdminRole", policy =>
+    {
+        policy.RequireRole("admin");
+    });
+    options.AddPolicy("RequireUserRole", policy =>
+    {
+        policy.RequireRole("user");
+    });
+});
 
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<JwtHelper>();

@@ -77,5 +77,21 @@ namespace blog_api.Controllers
             }
             return new JsonResult(null);
         }
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpGet("GetAdminRole")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public IActionResult GetAdminRole()
+        {
+            return Ok();
+        }
+
+        [Authorize(Policy = "RequireUserRole")]
+        [HttpGet("GetUserRole")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public IActionResult GetUserRole()
+        {
+            return Ok();
+        }
     }
 }
