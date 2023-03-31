@@ -2,6 +2,8 @@
 using blog_api.Models.Test;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace blog_api.Controllers
 {
@@ -75,6 +77,31 @@ namespace blog_api.Controllers
             {
 
             }
+            return new JsonResult(null);
+        }
+
+        [HttpGet("GetClaims")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public IActionResult GetClaims(string claimNames)
+        {
+            try
+            {
+                if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    List<Claim> claims = User.Claims.ToList();
+                    Predicate<Claim> predicate = predicate =>
+                    {
+                        return predicate.Type.Equals(claimNames);
+                    };
+
+                    if (User.HasClaim(predicate))
+                    {
+                        Claim? claim = User.FindFirst(predicate);
+                        return new JsonResult(claim);
+                    }
+                }
+            }
+            catch { }
             return new JsonResult(null);
         }
 

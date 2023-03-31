@@ -93,6 +93,7 @@ namespace blog_api.Helper
             var claims = new List<Claim>();
 
             // *** 新增自訂的User資訊
+            claims.Add(new Claim(JwtRegisteredClaimNames.Name, userName));
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, userName));
             claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())); // JWT ID
 

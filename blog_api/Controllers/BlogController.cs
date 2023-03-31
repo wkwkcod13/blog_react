@@ -1,11 +1,13 @@
 ﻿using blog_api.Models;
 using blog_api.Service.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Net.Mime;
 
 namespace blog_api.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("[controller]")]
     public class BlogController : ControllerBase
