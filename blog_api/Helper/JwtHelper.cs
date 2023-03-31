@@ -44,7 +44,6 @@ namespace blog_api.Helper
                 foreach (var role in list)
                 {
                     claims.Add(new Claim("roles", role));//// 你可以自行擴充 "roles" 加入登入者該有的角色
-                                                         // 新增自訂的User資訊 ***
                 }
             }
             return GenerateToken(claims, expireMinutes);
