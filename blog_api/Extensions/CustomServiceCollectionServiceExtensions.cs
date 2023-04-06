@@ -3,7 +3,7 @@ using blog_api.Models;
 using blog_api.Service.Interface;
 using blog_api.Service;
 
-namespace blog_api.Handler
+namespace blog_api.Extensions
 {
     public static class CustomServiceCollectionServiceExtensions
     {
