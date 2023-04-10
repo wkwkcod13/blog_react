@@ -11,6 +11,7 @@ namespace blog_api.Handler
                 options.AddPolicy(name, policy =>
                 {
                     policy.WithOrigins("https://localhost:3000", "*");
+                    policy.WithHeaders("Authorization");
                 });
             };
             return option;

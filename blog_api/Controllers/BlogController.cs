@@ -7,7 +7,7 @@ using System.Net.Mime;
 
 namespace blog_api.Controllers
 {
-    [AllowAnonymous]
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class BlogController : ControllerBase

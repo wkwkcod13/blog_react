@@ -1,6 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Security.Authentication;
 using blog_api.Helper;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
+using System.Net.Mime;
+using blog_api.Models.Para;
+
 namespace blog_api.Controllers
 {
     [ApiController]
@@ -13,15 +19,17 @@ namespace blog_api.Controllers
             _jwtHelper = helper;
         }
 
-        [HttpGet("loginE")]
-        public IActionResult ELogin(string userName, string password)
+        [HttpPost("loginE")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        public IActionResult ELogin([FromBody] ParaELogin para)
         {
             try
             {
-                if (AuthenticateUser(userName, password))
+                if (AuthenticateUser(para.Account, para.Password))
                 {
-                    var token = _jwtHelper.GenerateEncryptionToken(userName, new Guid().ToString(), new List<string>() { "user", "admin" }, null);
-                    return Ok(new { token });
+                    var token = _jwtHelper.GenerateEncryptionToken(para.Account, new Guid().ToString(), new List<string>() { "user", "admin" }, null);
+                    return Content(token, MediaTypeNames.Text.Plain);
                 }
                 else
                 {
