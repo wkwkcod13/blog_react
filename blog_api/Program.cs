@@ -1,6 +1,5 @@
 using blog_api.Extensions;
 using blog_api.Handler;
-using Swashbuckle.AspNetCore.SwaggerUI;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
