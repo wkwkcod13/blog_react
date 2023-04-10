@@ -1,4 +1,6 @@
+using blog_api.Extensions;
 using blog_api.Handler;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -13,11 +15,14 @@ builder.Services.AddCors(CustomCors.DefaultCorsOptions(MyAllowSpecificOrigins));
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddAuthentication(CustomAuthentication.DefaultAuthenticationOptions)
-    .AddJwtBearer(CustomAuthentication.DefaultBearerOptions(signKey, encryKey));
+    .AddJwtBearer(CustomAuthentication.DefaultBearerOptions(signKey, encryKey))
+    .AddGoogle(CustomAuthentication.GoogleOAuthOptions());
+builder.Services.AddCustomServiceCollection();
 
 builder.Services.AddAuthorization(CustomAuthorization.DefaultAuthorizationOptions);
-builder.Services.AddCustomServiceCollection();
-builder.Services.AddSwaggerGen(CustomSwaggerGen.DefaultSwaggerGenOptions);
+
+builder.Services.AddSwaggerGen(CustomSwaggerGen.JwtBearerSwaggerGenOptions);
+builder.Services.AddSwaggerGen(CustomSwaggerGen.GoogleSwaggerGenOptions);
 
 var app = builder.Build();
 
@@ -27,7 +32,5 @@ app.UseHttpsRedirection();
 app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
