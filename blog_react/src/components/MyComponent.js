@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import ApiRoutes, { } from '../ApiRoutes';
+import jwtToken from './jwtToken';
 
 function MyComponent() {
     const [data, setData] = useState([]);
@@ -7,20 +9,23 @@ function MyComponent() {
     }, []);
 
     const fetchData = async () => {
-        await fetch("https://localhost:44372/Blog", { method: "GET" })
-            .then(async res => {
-                console.log(res);
-                console.log(res.status + "_" + res.statusText);
-
+        await fetch(ApiRoutes.ApiRoot + "/Blog",
+            {
+                method: "GET",
+                headers: {
+                    'Authorization': `Bearer ${jwtToken.fnTokenGet()}`
+                }
+            })
+            .then(async (res) => {
+                //console.log(res.status + "_" + res.statusText);
                 let jsonData = await res.json();
-
-                console.log(jsonData);
+                //console.log(jsonData);
                 setData(jsonData);
             })
-            .catch(res => {
+            .catch((res) => {
                 console.log(res);
             });
-    }
+    };
 
     const itemElement = data.map((item, index) => (
         <div key={index}>{item.blogId}</div>
@@ -29,21 +34,8 @@ function MyComponent() {
     return (
         <div>
             <h1>Todo List</h1>
-            {itemElement}
-            <table>
-                <tbody>
-                    {
-                        data.map((item, index) => (
-                            <tr key={index}>
-                                <td>{item.blogId}</td>
-                                <td>{item.title}</td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
         </div>
     );
-}
+};
 
 export default MyComponent;

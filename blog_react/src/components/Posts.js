@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ApiRoutes from '../ApiRoutes';
+import jwtToken from './jwtToken';
 
 export class Posts extends Component {
     constructor(props) {
@@ -7,11 +8,17 @@ export class Posts extends Component {
         this.state = {
             events: []
         };
+        console.log(jwtToken.fnTokenGet());
         this.fetchPostList();
     }
 
-    fetchPostList() {
-        fetch(ApiRoutes.ApiRoot + '/blog', { method: "GET" })
+    async fetchPostList() {
+        fetch(ApiRoutes.ApiRoot + '/blog', {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${jwtToken.fnTokenGet()}`
+            }
+        })
             .then(async (res) => {
                 let json = await res.json()
                 console.log(json);
@@ -29,7 +36,7 @@ export class Posts extends Component {
                     {
                         this.state.events.map((item, index) => (
                             <li key={index} id={item.blogId}>
-                                <a href={ './posts/' + index}>
+                                <a href={'./posts/' + index}>
                                     {item.title} {item.blogId}
                                 </a>
                             </li>

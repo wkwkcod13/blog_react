@@ -10,21 +10,24 @@ export class PostEdit extends Component {
             blog: {}
         };
         const { id } = this.props;
+        const token = localStorage.getItem('jwtToken');
         console.log(id);
-
-        this.fetchBlogDetail(id);
+        this.fetchBlogDetail(id, token);
     }
 
-    fetchBlogDetail(blogId) {
+    fetchBlogDetail(blogId, token) {
         console.log(ApiRoutes.ApiRoot + '/blog/' + blogId);
-        fetch(ApiRoutes.ApiRoot + '/blog/' + blogId, { method: 'GET' })
-            .then(async (res) => {
-                let json = await res.json();
-                console.log(json);
-                this.setState({ blog: json });
-            })
-            .catch((res) => {
-            })
+        fetch(ApiRoutes.ApiRoot + '/blog/' + blogId, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(async (res) => {
+            let json = await res.json();
+            console.log(json);
+            this.setState({ blog: json });
+        }).catch((res) => {
+        })
     }
 
     render() {
