@@ -1,9 +1,4 @@
 const ApiRoutes = {
-    ApiRoot: 'http://localhost:8099',
-    Calendar: {
-    },
-    Blog: {
-
-    }
+    ApiRoot: 'http://localhost:8099'
 }
 export default ApiRoutes;
