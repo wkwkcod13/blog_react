@@ -21,7 +21,7 @@ builder.Services.AddCustomServiceCollection();
 builder.Services.AddAuthorization(CustomAuthorization.DefaultAuthorizationOptions);
 
 builder.Services.AddSwaggerGen(CustomSwaggerGen.JwtBearerSwaggerGenOptions);
-builder.Services.AddSwaggerGen(CustomSwaggerGen.GoogleSwaggerGenOptions);
+//builder.Services.AddSwaggerGen(CustomSwaggerGen.CsrfSwaggerGenOptions);
 
 var app = builder.Build();
 

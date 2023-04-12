@@ -6,6 +6,8 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using System.Net.Mime;
 using blog_api.Models.Para;
+using Microsoft.AspNetCore.Antiforgery;
+using Microsoft.AspNetCore.Cors;
 
 namespace blog_api.Controllers
 {
@@ -14,8 +16,10 @@ namespace blog_api.Controllers
     public class AuthController : ControllerBase
     {
         private JwtHelper _jwtHelper;
-        public AuthController(JwtHelper helper)
+        private IAntiforgery _antiforgery;
+        public AuthController(JwtHelper helper, IAntiforgery antiforgery)
         {
+            _antiforgery = antiforgery;
             _jwtHelper = helper;
         }
 
@@ -66,6 +70,15 @@ namespace blog_api.Controllers
         private bool AuthenticateUser(string username, string password)
         {
             return true;
+        }
+
+        [HttpGet("AntiForgeryToken")]
+        [HttpHead("AntiForgeryToken")]
+        [Obsolete]
+        public IActionResult GetAntiForgeryToken()
+        {
+            var token = _antiforgery.GetAndStoreTokens(HttpContext);
+            return new JsonResult(new { requestToken = token.RequestToken, cookieToken = token.CookieToken });
         }
     }
 }

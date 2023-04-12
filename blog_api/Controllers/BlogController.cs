@@ -1,6 +1,8 @@
-﻿using blog_api.Models;
+﻿using blog_api.Handler;
+using blog_api.Models;
 using blog_api.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Net.Mime;
@@ -8,6 +10,7 @@ using System.Net.Mime;
 namespace blog_api.Controllers
 {
     [Authorize]
+    [CorsFilter]
     [ApiController]
     [Route("[controller]")]
     public class BlogController : ControllerBase
@@ -17,6 +20,7 @@ namespace blog_api.Controllers
         {
             blogService = service;
         }
+
         [HttpHead]
         public IActionResult GetHead()
         {
