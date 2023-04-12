@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import AppNav from './AppNav';
-
+import AppContent from './AppContent';
 export default class App extends Component {
     static displayName = App.name;
 
@@ -23,7 +23,7 @@ export default class App extends Component {
                                 element={
                                     <div>
                                         <AppNav></AppNav>
-                                        {element}
+                                        <AppContent>{element}</AppContent>
                                     </div>}
                             ></Route>
                         )
