@@ -10,9 +10,17 @@ namespace blog_api.Handler
             {
                 options.AddPolicy(name, policy =>
                 {
-                    policy.WithOrigins("https://localhost:3000", "*");
-                    policy.WithHeaders("Authorization");
+                    policy.WithOrigins("https://localhost:3000").AllowCredentials().SetIsOriginAllowedToAllowWildcardSubdomains();
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
                 });
+                options.AddPolicy("AllowAny", policy =>
+                {
+                    policy.AllowAnyOrigin();
+                    policy.AllowAnyMethod();
+                    policy.AllowAnyHeader();
+                });
+                options.DefaultPolicyName = name;
             };
             return option;
         }
