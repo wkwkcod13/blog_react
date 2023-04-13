@@ -5,9 +5,7 @@ export default class AppContent extends Component {
     render() {
         return (
             <div>
-                <Container>
-                    {this.props.children}
-                </Container>
+                {this.props.children}
             </div>
         )
     }

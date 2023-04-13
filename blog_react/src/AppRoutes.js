@@ -5,6 +5,7 @@ import { Pages } from './components/Pages';
 import { Themes } from './components/Themes';
 import { Layout } from './components/Layout';
 import { Dates } from './components/Dates';
+import { Login } from './components/Login';
 import { useParams } from 'react-router-dom';
 
 function PostEditWithId() {
@@ -41,6 +42,10 @@ const AppRoutes = [
     {
         path: '/dates',
         element: <Dates></Dates>
+    },
+    {
+        path: '/login',
+        element: <Login></Login>
     }
 ];
 export default AppRoutes;

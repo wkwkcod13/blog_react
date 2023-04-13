@@ -6,7 +6,8 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 const NavLink = [
     { name: 'Posts', href: './Posts' },
     { name: 'Pages', href: './Pages' },
-    { name: 'Layout', href: './Layout' }
+    { name: 'Layout', href: './Layout' },
+    { name: 'Login', href: './Login' }
 ];
 
 function AppNav() {
