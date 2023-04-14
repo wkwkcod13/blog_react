@@ -21,10 +21,11 @@ builder.Services.AddAuthentication(CustomAuthentication.DefaultAuthenticationOpt
 builder.Services.AddCustomServiceCollection();
 builder.Services.AddAuthorization(CustomAuthorization.DefaultAuthorizationOptions);
 
-//builder.Services.AddAntiforgery(options => { options.HeaderName = "X-CSRF-TOKEN"; });
+builder.Services.AddAntiforgery(options => { options.HeaderName = "X-CSRF-TOKEN"; });
 
+builder.Services.AddSwaggerGen(CustomSwaggerGen.DefaultSwaggerGenOptions);
 builder.Services.AddSwaggerGen(CustomSwaggerGen.JwtBearerSwaggerGenOptions);
-//builder.Services.AddSwaggerGen(CustomSwaggerGen.CsrfSwaggerGenOptions);
+builder.Services.AddSwaggerGen(CustomSwaggerGen.CsrfSwaggerGenOptions);
 
 var app = builder.Build();
 

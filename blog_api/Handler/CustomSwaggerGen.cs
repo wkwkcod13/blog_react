@@ -1,5 +1,7 @@
 ﻿using iText.Kernel.XMP.Options;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace blog_api.Handler
@@ -8,7 +10,7 @@ namespace blog_api.Handler
     {
         public static Action<SwaggerGenOptions> DefaultSwaggerGenOptions = options =>
         {
-
+            options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
         };
 
         public static Action<SwaggerGenOptions> JwtBearerSwaggerGenOptions = options =>
@@ -74,6 +76,11 @@ namespace blog_api.Handler
                     }, new string[]{ }
                 }
             });
+        };
+
+        public static Action<SwaggerGenOptions> CsrfSwaggerGenOptions = options =>
+        {
+            options.OperationFilter<AddHeaderOperationFilter>("X-CSRF-TOKEN", "");
         };
     }
 }

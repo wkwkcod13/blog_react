@@ -24,6 +24,7 @@ namespace blog_api.Controllers
         }
 
         [HttpPost("loginE")]
+        [ValidateAntiForgeryToken]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         public IActionResult ELogin([FromBody] ParaELogin para)
@@ -77,8 +78,11 @@ namespace blog_api.Controllers
         [Obsolete]
         public IActionResult GetAntiForgeryToken()
         {
-            var token = _antiforgery.GetAndStoreTokens(HttpContext);
-            return new JsonResult(new { requestToken = token.RequestToken, cookieToken = token.CookieToken });
+            AntiforgeryTokenSet token = _antiforgery.GetAndStoreTokens(HttpContext);
+            return new JsonResult(
+                token
+                //new { requestToken = token.RequestToken, cookieToken = token.CookieToken }
+                );
         }
     }
 }
