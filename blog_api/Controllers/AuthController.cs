@@ -75,14 +75,10 @@ namespace blog_api.Controllers
 
         [HttpGet("AntiForgeryToken")]
         [HttpHead("AntiForgeryToken")]
-        [Obsolete]
         public IActionResult GetAntiForgeryToken()
         {
             AntiforgeryTokenSet token = _antiforgery.GetAndStoreTokens(HttpContext);
-            return new JsonResult(
-                token
-                //new { requestToken = token.RequestToken, cookieToken = token.CookieToken }
-                );
+            return new JsonResult(token);
         }
     }
 }
