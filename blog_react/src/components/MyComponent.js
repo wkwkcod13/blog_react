@@ -12,9 +12,7 @@ function MyComponent() {
         await fetch(ApiRoutes.ApiRoot + "/Blog",
             {
                 method: "GET",
-                headers: {
-                    'Authorization': `Bearer ${jwtToken.fnTokenGet()}`
-                }
+                headers: { 'Authorization': `Bearer ${jwtToken.fnTokenGet()}` }
             })
             .then(async (res) => {
                 //console.log(res.status + "_" + res.statusText);
