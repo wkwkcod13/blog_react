@@ -8,10 +8,12 @@ using System.Net.Mime;
 using blog_api.Models.Para;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Cors;
+using blog_api.Handler;
 
 namespace blog_api.Controllers
 {
     [ApiController]
+    [CorsFilter]
     [Route("[controller]")]
     public class AuthController : ControllerBase
     {
@@ -77,8 +79,8 @@ namespace blog_api.Controllers
         [HttpHead("AntiForgeryToken")]
         public IActionResult GetAntiForgeryToken()
         {
-            AntiforgeryTokenSet token = _antiforgery.GetAndStoreTokens(HttpContext);
-            return new JsonResult(token);
+            AntiforgeryTokenSet token = _antiforgery.GetAndStoreTokens(Request.HttpContext);
+            return new JsonResult(new { requestToken = token.RequestToken, Orign = Request.Headers.Origin});
         }
     }
 }
