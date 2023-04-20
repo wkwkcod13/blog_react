@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import MyComponent from './MyComponent';
 import fnlogin from './function/fnLogin';
 import jwtToken from './jwtToken';
-import csrfToken from './csrfToken';
 import ApiRoutes from '../ApiRoutes';
 
 export class Home extends Component {
@@ -18,14 +16,14 @@ export class Home extends Component {
                 'Authorization': `Bearer ${jwtToken.fnTokenGet()}`
             }
         }).then((res) => {
-            //console.log(res);
+            // console.log(res);
         }).catch(error => {
             jwtToken.fnTokenClear();
         })
         const token = jwtToken.fnTokenGet();
         //console.log(token);
         if (token === null) {
-            await fnlogin('qwe', 'ewq');
+            await fnlogin('1133', '44223');
             //console.log("after:" + jwtToken.fnTokenGet());
         }
         

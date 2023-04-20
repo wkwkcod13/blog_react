@@ -40,7 +40,9 @@ export class Login extends Component {
                             <Form.Check label="Remember me" />
                         </Col>
                     </Form.Group>
-                    <Button type="submit"></Button>
+                    <Button type="submit">
+                        <span>Login</span>
+                    </Button>
                 </Form>
             </Container>
         );
