@@ -33,7 +33,7 @@ export class Posts extends Component {
             }
         })
             .then(async (res) => {
-                let json = await res.json()
+                let json = await res.json() as blog[];
                 console.log(json);
                 this.setState({
                     events: json
@@ -47,7 +47,7 @@ export class Posts extends Component {
                 <span>Posts</span>
                 <ul>
                     {
-                        this.state.events.map((item, index) => (
+                        this.state.events?.map((item, index) => (
                             <li key={index} id={item.blogId}>
                                 <a href={'./posts/' + index}>
                                     {item.title} {item.blogId}

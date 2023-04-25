@@ -4,9 +4,11 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
+import fnlogin from './function/fnLogin';
 
 export class Login extends Component {
-    handleSubmit = () => {
+    handleSubmit = async () => {
+        await fnlogin("qweasd", "asdqwe");
         console.log("form submitted");
     };
     render() {
