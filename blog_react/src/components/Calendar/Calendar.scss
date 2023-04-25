@@ -1,0 +1,21 @@
+div.c-time-grid {
+    position: relative;
+    width: 100%
+}
+
+div.c-bg {
+    z-index: 1
+}
+
+div.c-clats {
+    position: relative;
+    z-index: 2
+}
+
+div.c-skeleton {
+    z-index: 3;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}

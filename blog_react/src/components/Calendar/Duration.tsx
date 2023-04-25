@@ -1,24 +1,30 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 
-export class Duration extends Component {
+interface duration {
+    hours: number;
+    minutes: number;
+    seconds: number;
+    milliseconds: number;
+}
+
+export class Duration extends React.Component {
     years: number = 0;
     months: number = 0;
     days: number = 0;
     hours: number = 0;
     minutes: number = 0;
+    seconds: number = 0;
     milliseconds: number = 0;
+
     static propTypes = {
-        years: PropTypes.number,
-        months: PropTypes.number,
-        days: PropTypes.number,
         hours: PropTypes.number,
         minutes: PropTypes.number,
         seconds: PropTypes.number,
         milliseconds: PropTypes.number,
     }
 
-    constructor(prop: string | Readonly<Duration>) {
+    constructor(prop: string | Readonly<Duration> | Readonly<duration>) {
         super(prop);
         if (typeof prop === 'string') {
             let baseDate: Date = new Date(0);
@@ -29,47 +35,45 @@ export class Duration extends Component {
                 const { hh, mm } = regex1.exec(prop)?.groups ?? {};
                 const hour: number = hh !== undefined ? parseInt(hh) : 0;
                 const min: number = mm !== undefined ? parseInt(mm) : 0;
-                let temp = new Date(0);
-                temp.setUTCHours(hour);
-                temp.setUTCMinutes(min);
-                const duration = temp.getTime() - new Date(0).getTime();
-                this.milliseconds = duration;
+                this.hours = hour;
+                this.minutes = min;
+
             } else if (regex2.test(prop)) {
                 const { hh, mm, ss, sss } = regex2.exec(prop)?.groups ?? {};
                 const hour: number = hh !== undefined ? parseInt(hh) : 0;
                 const min: number = mm !== undefined ? parseInt(mm) : 0;
                 const sec: number = ss !== undefined ? parseInt(ss) : 0;
                 const millisec: number = sss !== undefined ? parseFloat(sss) : 0;
-                let temp = new Date(0);
-                temp.setUTCHours(hour);
-                temp.setUTCMinutes(min);
-                temp.setUTCSeconds(sec);
-                temp.setUTCMilliseconds(millisec);
-                const duration = temp.getTime() - new Date(0).getTime()
-                this.milliseconds = duration;
+                this.hours = hour;
+                this.minutes = min;
+                this.seconds = sec;
+                this.milliseconds = millisec;
+
             }
         }
         else if (prop instanceof Duration) {
-            this.years = prop.years;
-            this.months = prop.months;
-            this.days = prop.days;
-            this.milliseconds = prop.milliseconds;
-        }
-        else if (typeof prop === typeof Duration.propTypes) {
             this.years = prop.years ?? 0;
             this.months = prop.months ?? 0;
             this.days = prop.days ?? 0;
+            this.hours = prop.hours ?? 0;
+            this.minutes = prop.minutes ?? 0;
+            this.seconds = prop.seconds ?? 0;
             this.milliseconds = prop.milliseconds ?? 0;
+
+        } else if (typeof prop === typeof Duration.propTypes) {
+            const { hours, minutes, seconds, milliseconds } = prop;
+            this.hours = hours ?? 0;
+            this.minutes = minutes ?? 0;
+            this.seconds = seconds ?? 0;
+            this.milliseconds = milliseconds ?? 0;
         }
         console.log(this);
     }
-
-    add(b: Duration): number {
-        return this.milliseconds + b.milliseconds;
-    }
-
-    subtract(other: Duration): number {
-        return this.milliseconds - other.milliseconds;
+    getTotalMinutes(): number {
+        let total: number = 0;
+        total += (this.hours * 60);
+        total += this.minutes;
+        return total;
     }
 
     render() {

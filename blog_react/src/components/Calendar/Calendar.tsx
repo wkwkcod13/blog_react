@@ -6,23 +6,63 @@ import { Duration } from './Duration';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import CalendarEvent from './CalendarEvent';
+//import './Calendar.scss';
+
+interface calendar {
+    events: [];
+    currentDate: Date;
+    dayHeaders: boolean;
+    weekends: boolean;
+    startTime: string;
+    endTime: string;
+    duration: string;
+}
 
 export default class Calendar extends Component {
     events: [] = [];
     currentDate: Date = new Date();
     dayHeaders: boolean = true;
     weekends: boolean = true;
-    soltDuration: Duration | string = new Duration("00:15:00");
-    soltMinTime: Duration | string = new Duration("00:00:00");
-    soltMaxTime: Duration | string = new Duration("24:00:00");
-    constructor(props: {}) {
-        super(props);
-    }
+    duration: Duration = new Duration("00:15:00");
+    startTime: Duration = new Duration("00:00:00");
+    endTime: Duration = new Duration("23:59:59");
 
     static propTypes = {
-        Events: PropTypes.any,
+        events: PropTypes.array,
         dayHeaders: PropTypes.bool,
-        weekends: PropTypes.bool
+        weekends: PropTypes.bool,
+        startTime: PropTypes.string,
+        endTime: PropTypes.string,
+        duration: PropTypes.string
+    }
+
+    constructor(prop: Readonly<calendar> | Readonly<Calendar>) {
+        super(prop);
+        if (prop instanceof Calendar) {
+
+        } else if (typeof prop === typeof Calendar.propTypes) {
+            const { events, currentDate, dayHeaders, weekends, startTime, endTime, duration } = prop;
+            this.events = events;
+            this.currentDate = currentDate;
+            this.dayHeaders = dayHeaders;
+            this.weekends = weekends;
+            this.startTime = new Duration(startTime);
+            this.endTime = new Duration(endTime);
+            this.duration = new Duration(duration);
+        }
+    }
+
+    getTimeList(startTime: Duration, endTime: Duration, timeSpan: Duration): string[] {
+        let frequency: number = (endTime.getTotalMinutes() - startTime.getTotalMinutes()) / timeSpan.getTotalMinutes();
+        let time: string[] = [];
+        let aaa = [endTime.getTotalMinutes(), startTime.getTotalMinutes(), timeSpan.getTotalMinutes()];
+        frequency = parseInt(frequency.toString());
+        for (let i = 0; i <= frequency; i++) {
+            let temp = new Date('1970-01-01 00:00:00.000');
+            temp.setMinutes(timeSpan.getTotalMinutes() * i);
+            time.push(moment(temp).format("HH:mm"));
+        }
+        return time;
     }
 
     render() {
@@ -30,51 +70,66 @@ export default class Calendar extends Component {
         let starttime = Moment(new Date(this.currentDate))
         let headers: string[] = [];
         let times: Moment.Moment[] = [];
-        let timeRows: number[] = [];
+        let timeRows: string[] = this.getTimeList(this.startTime, this.endTime, this.duration);
         for (let i = 0; i < (this.weekends ? 7 : 5); i++) {
             headers.push(day.day(i).format());
         }
 
-        let min: Number = this.soltMaxTime. * 60
-        while () {
-            timeRows.push(i);
-        }
-
         return (
-            <Table>
-                <Duration years={0} months={3} days={11}></Duration>
-                <CalendarEvent ToDate={''} FromDate={''} Title={''}></CalendarEvent>
-                <thead>
-                    {
-                        this.dayHeaders ?
-                            <tr>
-                                <td></td>
-                                {
-                                    headers.map((result, index) => {
-                                        return (<td key={index}>{result}</td>);
-                                    })
-                                }
-                            </tr>
-                            : null
-                    }
-                </thead>
-                <tbody>
-                    {
-                        timeRows.map((result, index) => {
-                            return (
-                                <tr key={index} >
-                                    <td >{result.toString()}</td>
-                                    {
-                                        headers.map((result, index) => {
-                                            return (<td></td>);
-                                        })
-                                    }
-                                </tr>
-                            );
-                        })
-                    }
-                </tbody>
-            </Table>
+            <div className="c-time-grid">
+                <div className="c-bg">
+                    <Table striped bordered hover>
+                        <thead>
+                            {
+                                this.dayHeaders ?
+                                    <tr>
+                                        <td></td>
+                                        {
+                                            headers.map((result, index) => {
+                                                return (<td key={index}>{result}</td>);
+                                            })
+                                        }
+                                    </tr>
+                                    : null
+                            }
+                        </thead>
+                        <tbody>
+                            {
+                                timeRows.map((result, index) => {
+                                    return (
+                                        <tr key={index}>
+                                            <td>{result.toString()}</td>
+                                            {
+                                                headers.map((result, index) => {
+                                                    return (<td></td>);
+                                                })
+                                            }
+                                        </tr>
+                                    );
+                                })
+                            }
+                        </tbody>
+                    </Table>
+                </div>
+                <div className="c-slats">
+                </div>
+                <div className="c-skeleton">
+                    <Table>
+                        <tbody>
+                            {
+                                headers.map((result, index) => {
+                                    return (
+                                        <td key={index}>
+                                            {result}
+                                        </td>
+                                    );
+                                })
+                            }
+                        </tbody>
+                    </Table>
+                </div>
+            </div>
         );
     }
 }
+
