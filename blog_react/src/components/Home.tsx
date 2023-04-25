@@ -3,8 +3,13 @@ import fnlogin from './function/fnLogin';
 import jwtToken from './jwtToken';
 import ApiRoutes from '../ApiRoutes';
 
+interface home {
+    forecasts: [],
+    loading: boolean
+}
 export class Home extends Component {
-    constructor(props) {
+    state: home;
+    constructor(props: home) {
         super(props);
         this.state = { forecasts: [], loading: true };
         this.initAsync();
@@ -26,7 +31,7 @@ export class Home extends Component {
             await fnlogin('1133', '44223');
             //console.log("after:" + jwtToken.fnTokenGet());
         }
-        
+
     }
 
     render() {

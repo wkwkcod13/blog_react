@@ -4,10 +4,16 @@ import { Route, Routes } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import AppNav from './AppNav';
 import AppContent from './AppContent';
+
+interface app {
+    forecasts: [],
+    loading: boolean
+}
 export default class App extends Component {
+    state: app;
     static displayName = App.name;
 
-    constructor(props) {
+    constructor(props: app) {
         super(props);
         this.state = { forecasts: [], loading: true };
     }

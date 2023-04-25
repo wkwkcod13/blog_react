@@ -1,5 +1,5 @@
 import ApiRoutes from '../ApiRoutes';
-export default async function csrfToken() {
+export default async function csrfToken(): Promise<string> {
     let token = '';
     await fetch(`${ApiRoutes.ApiRoot}/Auth/AntiForgeryToken`, {
         method: "GET"

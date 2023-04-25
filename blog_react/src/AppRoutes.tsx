@@ -7,12 +7,13 @@ import { Layout } from './components/Layout';
 import { Dates } from './components/Dates';
 import { Login } from './components/Login';
 import { useParams } from 'react-router-dom';
+import React from 'react';
 
-function PostEditWithId() {
-    // wrap the PostEdit component with the id prop
-    const { id } = useParams();
-    return <PostEdit id={id} />;
-}
+//function PostEditWithId() {
+//    // wrap the PostEdit component with the id prop
+//    const { id } = useParams() ?? "";
+//    return <PostEdit id={id} />;
+//}
 
 const AppRoutes = [
     {
@@ -23,10 +24,10 @@ const AppRoutes = [
         path: '/posts',
         element: <Posts></Posts>
     },
-    {
-        path: '/posts/:id',
-        element: <PostEditWithId></PostEditWithId>
-    },
+    //{
+    //    path: '/posts/:id',
+    //    element:<PostEditWithId></PostEditWithId>
+    //},
     {
         path: '/pages',
         element: <Pages></Pages>

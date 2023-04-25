@@ -9,7 +9,7 @@ export class Login extends Component {
     render() {
         return (
             <Container fluid="xl">
-                <Form class="" fluid="md">
+                <Form>
                     <Form.Group as={Row} md={{ offset: 0.5, span: 3 }}>
                         <Form.Group as={Col} xs={{ span: 11.5, offset: 0.5 }} md={6} controlId="formGroupEmail">
                             <Form.Label>Email address</Form.Label>

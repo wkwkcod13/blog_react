@@ -1,13 +1,26 @@
 import React, { Component } from 'react';
 import ApiRoutes from '../ApiRoutes';
 import jwtToken from './jwtToken';
+import { blog } from './PostEdit';
 
+//interface blog {
+//    blogId: string;
+//    subDescription: string;
+//    createDate: Date;
+//    authorId: string;
+//    authorName: string;
+//    title: string;
+//}
+interface posts {
+    events: blog[]
+}
 export class Posts extends Component {
-    constructor(props) {
-        super();
-        this.state = {
-            events: []
-        };
+    state: posts;
+    constructor(props: posts) {
+        super(props);
+        this.state = props;
+        this.setState({ events: [] });
+
         console.log(jwtToken.fnTokenGet());
         this.fetchPostList();
     }

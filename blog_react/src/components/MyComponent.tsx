@@ -25,9 +25,9 @@ function MyComponent() {
             });
     };
 
-    const itemElement = data.map((item, index) => (
-        <div key={index}>{item.blogId}</div>
-    ));
+    //const itemElement = data.map((item, index) => (
+    //    <div key={index}>{item.blogId}</div>
+    //));
 
     return (
         <div>
