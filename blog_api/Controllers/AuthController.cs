@@ -26,7 +26,7 @@ namespace blog_api.Controllers
         }
 
         [HttpPost("loginE")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         public IActionResult ELogin([FromBody] ParaELogin para)

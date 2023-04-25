@@ -55,7 +55,7 @@ namespace blog_api.Controllers
         }
 
         [HttpPost()]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public IActionResult CreateDetail(Blog param)
         {
             try
