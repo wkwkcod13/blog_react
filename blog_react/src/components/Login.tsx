@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, ReactEventHandler } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -6,6 +6,9 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 
 export class Login extends Component {
+    handleSubmit = () => {
+        console.log("form submitted");
+    };
     render() {
         return (
             <Container fluid="xl">
@@ -40,7 +43,7 @@ export class Login extends Component {
                             <Form.Check label="Remember me" />
                         </Col>
                     </Form.Group>
-                    <Button type="submit">
+                    <Button onClick={this.handleSubmit}>
                         <span>Login</span>
                     </Button>
                 </Form>
