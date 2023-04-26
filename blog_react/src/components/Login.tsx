@@ -1,4 +1,4 @@
-import React, { Component, ReactEventHandler } from 'react';
+import React, { ChangeEvent, ChangeEventHandler, Component, ReactEventHandler } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -6,9 +6,34 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import fnlogin from './function/fnLogin';
 
+interface login {
+    account: string;
+    password: string;
+    rememberMe: boolean;
+}
+
 export class Login extends Component {
-    handleSubmit = async () => {
-        await fnlogin("qweasd", "asdqwe");
+    state: login;
+    constructor(props: login) {
+        super(props);
+        this.state = props;
+        this.setState({ rememberMe: false });
+        this.handleAccountChange = this.handleAccountChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.handleRememberMeChange = this.handleRememberMeChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    handleAccountChange(event: ChangeEvent<HTMLInputElement>) {
+        this.setState({ account: event.target.value });
+    };
+    handlePasswordChange(event: ChangeEvent<HTMLInputElement>) {
+        this.setState({ password: event.target.value });
+    };
+    handleRememberMeChange(event: ChangeEvent<HTMLInputElement>) {
+        this.setState({ rememberMe: event.target.checked });
+    }
+    async handleSubmit() {
+        await fnlogin(this.state.account, this.state.password);
         console.log("form submitted");
     };
     render() {
@@ -18,13 +43,13 @@ export class Login extends Component {
                     <Form.Group as={Row} md={{ offset: 0.5, span: 3 }}>
                         <Form.Group as={Col} xs={{ span: 11.5, offset: 0.5 }} md={6} controlId="formGroupEmail">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" placeholder="Enter email"></Form.Control>
+                            <Form.Control type="email" placeholder="Enter email" onChange={this.handleAccountChange} value={this.state.account}></Form.Control>
                         </Form.Group>
                     </Form.Group>
                     <Form.Group as={Row} md={{ offset: 0.5, span: 3 }}>
                         <Form.Group as={Col} xs={{ span: 11.5, offset: 0.5 }} md={6} controlId="formGroupPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password"></Form.Control>
+                            <Form.Control type="password" placeholder="Password" onChange={this.handlePasswordChange} value={this.state.password}></Form.Control>
                         </Form.Group>
                     </Form.Group>
                     <fieldset>
@@ -42,7 +67,7 @@ export class Login extends Component {
                     </fieldset>
                     <Form.Group as={Row} md={{ offset: 0.5, span: 3 }} controlId="formHorizontalCheck">
                         <Col sm={{ span: 11.5, offset: 0.5 }}>
-                            <Form.Check label="Remember me" />
+                            <Form.Check label="Remember me" onChange={this.handleRememberMeChange} checked={this.state.rememberMe} />
                         </Col>
                     </Form.Group>
                     <Button onClick={this.handleSubmit}>
