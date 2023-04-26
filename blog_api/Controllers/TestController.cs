@@ -3,7 +3,6 @@ using blog_api.Models.Test;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace blog_api.Controllers
 {
@@ -80,9 +79,9 @@ namespace blog_api.Controllers
             return new JsonResult(null);
         }
 
-        [HttpGet("GetClaims")]
+        [HttpGet("Claims/{claimNames}")]
         [Consumes(MediaTypeNames.Application.Json)]
-        public IActionResult GetClaims(string claimNames)
+        public IActionResult GetClaim(string claimNames)
         {
             try
             {
@@ -98,6 +97,52 @@ namespace blog_api.Controllers
                     {
                         Claim? claim = User.FindFirst(predicate);
                         return new JsonResult(claim);
+                    }
+                }
+            }
+            catch { }
+            return new JsonResult(null);
+        }
+
+        [HttpGet("Claims")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public IActionResult GetClaims()
+        {
+            try
+            {
+                if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    return new JsonResult(User.Claims.Select(
+                        item =>
+                        {
+                            return new { item.Type, item.Value };
+                        }));
+                }
+            }
+            catch { }
+            return new JsonResult(null);
+        }
+
+        [HttpGet("Roles")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public IActionResult GetRoles()
+        {
+            try
+            {
+                if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    Predicate<Claim> predicate = predicate =>
+                    {
+                        return predicate.Type.Equals(ClaimTypes.Role);
+                    };
+                    if (User.HasClaim(predicate))
+                    {
+                        return new JsonResult(
+                            User.Claims.Where(
+                                item => item.Type.Equals(ClaimTypes.Role)
+                                ).Select(
+                                item => { return new { item.Type, item.Value }; }
+                                ).ToList());
                     }
                 }
             }
