@@ -114,7 +114,7 @@ namespace blog_api.Helper
             {
                 foreach (var role in list)
                 {
-                    claims.Add(new Claim("roles", role)); //// 你可以自行擴充 "roles" 加入登入者該有的角色
+                    claims.Add(new Claim(ClaimTypes.Role, role)); //// 你可以自行擴充 "roles" 加入登入者該有的角色
                 }
             }
             return GenerateEnvryptionToken(userName, issuer, claims, expireMinutes);
