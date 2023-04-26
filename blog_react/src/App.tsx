@@ -4,9 +4,9 @@ import { Route, Routes } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import AppNav from './AppNav';
 import AppContent from './AppContent';
+import jwtToken from './components/jwtToken';
 
 interface app {
-    forecasts: [],
     loading: boolean
 }
 export default class App extends Component {
@@ -15,7 +15,9 @@ export default class App extends Component {
 
     constructor(props: app) {
         super(props);
-        this.state = { forecasts: [], loading: true };
+        this.state = { loading: true };
+        const token: string = jwtToken.fnTokenGet() ?? "";
+
     }
 
     render() {
@@ -30,7 +32,8 @@ export default class App extends Component {
                                     <div>
                                         <AppNav></AppNav>
                                         <AppContent>{element}</AppContent>
-                                    </div>}
+                                    </div>
+                                }
                             ></Route>
                         )
                     })

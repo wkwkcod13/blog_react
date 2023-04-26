@@ -6,7 +6,6 @@ import { Duration } from './Duration';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import CalendarEvent from './CalendarEvent';
-//import './Calendar.scss';
 
 interface calendar {
     events: [];

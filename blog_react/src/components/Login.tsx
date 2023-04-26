@@ -70,7 +70,7 @@ export class Login extends Component {
                             <Form.Check label="Remember me" onChange={this.handleRememberMeChange} checked={this.state.rememberMe} />
                         </Col>
                     </Form.Group>
-                    <Button onClick={this.handleSubmit}>
+                    <Button onClick={ this.handleSubmit}>
                         <span>Login</span>
                     </Button>
                 </Form>

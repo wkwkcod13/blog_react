@@ -8,12 +8,14 @@ const NavLink = [
     { name: 'Posts', href: './Posts' },
     { name: 'Pages', href: './Pages' },
     { name: 'Layout', href: './Layout' },
-    { name: 'Login', href: './Login' }
+    //{ name: 'Login', href: './Login' }
 ];
+interface appNav {
 
-function AppNav() {
+}
+function AppNav(prop: appNav) {
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar bg="dark" expand="lg">
             <Container>
                 <Navbar.Brand href="./">React-Bootstrap</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -41,6 +43,9 @@ function AppNav() {
                             </NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
+                </Navbar.Collapse>
+                <Navbar.Collapse className="justify-content-end">
+                    <Nav.Link href="./Login">Login</Nav.Link>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
