@@ -9,6 +9,7 @@ using blog_api.Models.Para;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Cors;
 using blog_api.Handler;
+using System.Security.Claims;
 
 namespace blog_api.Controllers
 {
@@ -26,7 +27,6 @@ namespace blog_api.Controllers
         }
 
         [HttpPost("loginE")]
-        //[ValidateAntiForgeryToken]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         public IActionResult ELogin([FromBody] ParaELogin para)
@@ -35,7 +35,9 @@ namespace blog_api.Controllers
             {
                 if (AuthenticateUser(para.Account, para.Password))
                 {
-                    var token = _jwtHelper.GenerateEncryptionToken(para.Account, new Guid().ToString(), new List<string>() { "user", "admin" }, null);
+                    Dictionary<string, string> claims = new Dictionary<string, string>();
+                    claims.Add(ClaimTypes.UserData, new Guid().ToString());
+                    var token = _jwtHelper.GenerateEncryptionToken(para.Account, new Guid().ToString(), new List<string>() { "user", "admin" }, claims);
                     return Content(token, MediaTypeNames.Text.Plain);
                 }
                 else
@@ -80,7 +82,7 @@ namespace blog_api.Controllers
         public IActionResult GetAntiForgeryToken()
         {
             AntiforgeryTokenSet token = _antiforgery.GetAndStoreTokens(Request.HttpContext);
-            return new JsonResult(new { requestToken = token.RequestToken, Orign = Request.Headers.Origin});
+            return new JsonResult(new { requestToken = token.RequestToken, Orign = Request.Headers.Origin });
         }
     }
 }

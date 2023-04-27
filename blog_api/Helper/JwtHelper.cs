@@ -25,6 +25,7 @@ namespace blog_api.Helper
 
             // *** 新增自訂的User資訊
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, userName));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.Ticks.ToString()));
             claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())); // JWT ID
 
             if (!string.IsNullOrWhiteSpace(device))
@@ -35,7 +36,7 @@ namespace blog_api.Helper
             {
                 foreach (var key in keys)
                 {
-                    claims.Add(new Claim(key.Key, key.Value.ToString()));
+                    claims.Add(new Claim(key.Key, key.Value?.ToString() ?? ""));
                 }
             }
 
@@ -85,7 +86,7 @@ namespace blog_api.Helper
         /// <param name="claimKeys"></param>
         /// <param name="expireMinutes"></param>
         /// <returns></returns>
-        public string GenerateEncryptionToken(string userName, string device, List<string>? roles, Dictionary<string, object>? claimKeys, int expireMinutes = 60)
+        public string GenerateEncryptionToken(string userName, string device, List<string>? roles, Dictionary<string, string>? claimKeys, int expireMinutes = 60)
         {
             var issuer = config.GetValue<string>("JwtSettings:Issuer");
 
@@ -93,16 +94,16 @@ namespace blog_api.Helper
             var claims = new List<Claim>();
 
             // *** 新增自訂的User資訊
-            claims.Add(new Claim(JwtRegisteredClaimNames.Name, userName));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Sub, userName));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())); // JWT ID
+            claims.Add(new Claim(JwtRegisteredClaimNames.Name, userName, ClaimValueTypes.String, issuer));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Sub, userName, ClaimValueTypes.String, issuer));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString(), ClaimValueTypes.String, issuer)); // JWT ID
 
             if (!string.IsNullOrWhiteSpace(device))
             {
                 claims.Add(new Claim("device", device, ClaimValueTypes.String, issuer));
             }
 
-            if (claimKeys is Dictionary<string, object> keys)
+            if (claimKeys is Dictionary<string, string> keys)
             {
                 foreach (var key in keys)
                 {

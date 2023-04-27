@@ -13,6 +13,7 @@ namespace blog_api.Extensions
             collection.AddSingleton<IBlogService, BlogService>();
             collection.AddSingleton<ICalendarService, CalendarService>();
             collection.AddSingleton<ICalendarFactory, CalendarFactory>();
+            collection.AddScoped<IAccountService, AccountService>();
             return collection;
         }
     }
