@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Cors;
 using blog_api.Handler;
 using System.Security.Claims;
+using blog_api.Service.Interface;
 
 namespace blog_api.Controllers
 {
@@ -20,10 +21,12 @@ namespace blog_api.Controllers
     {
         private JwtHelper _jwtHelper;
         private IAntiforgery _antiforgery;
-        public AuthController(JwtHelper helper, IAntiforgery antiforgery)
+        private IAuthService _authService;
+        public AuthController(JwtHelper helper, IAntiforgery antiforgery, IAuthService authService)
         {
             _antiforgery = antiforgery;
             _jwtHelper = helper;
+            _authService = authService;
         }
 
         [HttpPost("loginE")]
@@ -33,11 +36,11 @@ namespace blog_api.Controllers
         {
             try
             {
-                if (AuthenticateUser(para.Account, para.Password))
+                if (_authService.AuthenticateUser(para.Account, para.Password))
                 {
                     Dictionary<string, string> claims = new Dictionary<string, string>();
-                    claims.Add(ClaimTypes.UserData, new Guid().ToString());
-                    var token = _jwtHelper.GenerateEncryptionToken(para.Account, new Guid().ToString(), new List<string>() { "user", "admin" }, claims);
+                    claims.Add(ClaimTypes.UserData, Guid.NewGuid().ToString());
+                    var token = _jwtHelper.GenerateEncryptionToken(para.Account, Guid.NewGuid().ToString(), new List<string>() { "user", "admin" }, claims);
                     return Content(token, MediaTypeNames.Text.Plain);
                 }
                 else
@@ -56,7 +59,7 @@ namespace blog_api.Controllers
         {
             try
             {
-                if (AuthenticateUser(userName, password))
+                if (_authService.AuthenticateUser(userName, password))
                 {
                     var token = _jwtHelper.GenerateToken(userName, new Guid().ToString(), new List<string>() { "user", "admin" }, null);
                     return Ok(new { token });
@@ -70,11 +73,6 @@ namespace blog_api.Controllers
             {
             }
             return NotFound();
-        }
-
-        private bool AuthenticateUser(string username, string password)
-        {
-            return true;
         }
 
         [HttpGet("AntiForgeryToken")]

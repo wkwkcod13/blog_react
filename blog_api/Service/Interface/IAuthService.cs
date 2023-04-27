@@ -2,5 +2,6 @@
 {
     public interface IAuthService
     {
+        bool AuthenticateUser(string username, string password);
     }
 }

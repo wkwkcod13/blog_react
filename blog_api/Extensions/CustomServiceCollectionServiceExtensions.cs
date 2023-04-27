@@ -10,6 +10,7 @@ namespace blog_api.Extensions
         public static IServiceCollection AddCustomServiceCollection(this IServiceCollection collection)
         {
             collection.AddSingleton<JwtHelper>();
+            collection.AddSingleton<IAuthService, AuthService>();
             collection.AddSingleton<IBlogService, BlogService>();
             collection.AddSingleton<ICalendarService, CalendarService>();
             collection.AddSingleton<ICalendarFactory, CalendarFactory>();
