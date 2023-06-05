@@ -7,7 +7,7 @@ namespace blog_api.Models.Socket
     {
         None,
         TestSend,
-        Heartbeat,
-        SendMessageRead
+        Heartbeat
+        //SendMessageRead
     }
 }

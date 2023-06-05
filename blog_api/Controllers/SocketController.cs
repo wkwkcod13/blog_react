@@ -18,7 +18,7 @@ namespace blog_api.Controllers
         {
             ISocketBase<SocketReceivesTypes, object> socket = receivesTypes switch
             {
-                SocketReceivesTypes.None => new SocketBaseObj(),
+                SocketReceivesTypes.None => new SocketNoneObj(),
                 SocketReceivesTypes.Heartbeat => new SocketHeartbeatObj(),
                 SocketReceivesTypes.TestSend => new SocketTestSendObj(),
                 _ => throw new InvalidOperationException()
@@ -31,7 +31,6 @@ namespace blog_api.Controllers
         public IActionResult GetSocketObjList()
         {
             List<SocketBaseObj> sockets = new List<SocketBaseObj>();
-            sockets.Add(new SocketBaseObj());
             sockets.Add(new SocketHeartbeatObj());
             sockets.Add(new SocketTestSendObj());
             return new JsonResult(sockets);
